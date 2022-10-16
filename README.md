@@ -73,6 +73,7 @@ and use it somewhere in your code in order to make any object viable for [Next.j
 #### Full code snippet
 
 ```js
+// pages/index.js
 import { nextServerSideSerialize } from 'obj-serialize'
 import { getDogs } from '../services/get-dogs'
 
@@ -92,5 +93,45 @@ export default function Home({ smallDogs }) {
 ```
 
 This will work flawlessly ✅
+
+## Customising the serialization
+
+Apart from providing out-of-the-box working utility for serialisation that takes place in [Next.js][next] applications, the `obj-serialize` also provides option to create **your own serializers**.
+
+### Building your function
+
+All you have to do is to import base building block of the library (`serialize` function) and use it as you want.
+
+```js
+import { serialize } from 'obj-serialize'
+```
+
+The function accepts data to be serialized as a first parameter and serialization rules as the second parameter. The rules parameter is nothing else but function that is used to _“walk”_ through the object, be executed for each occurrence and eventually convert unserialized data into proper one by returning it.
+
+> ℹ️ There is a special value called `SkipSerialization`. It is a unique token that is intended to be used when serialisation traverse does not meet any condition in your serialisation rules and you just need to skip the process for particular case. It has to be this token and not `null` or `undefined` since these two can also have impact on desired data after the serialization.
+
+### Example custom serializer
+
+Let’s assume that you want to convert all `Date` objects not `toISOString()` _(as nextServerSideSerialize does)_ but rather `toLocaleString()`.
+
+```js
+import { serialize, SkipSerialization } from 'obj-serialize'
+
+export function customSerialize(data) {
+  return serialize(data, (unserializedData) => {
+    if (unserializedData instanceof Date) {
+      return unserializedData.toLocaleString()
+    } else {
+      return SkipSerialization
+    }
+  })
+}
+```
+
+and thats all! Now you can use your own serializer in the same way as presented [here](#full-code-snippet)
+
+# Acknowledgements and license
+
+The project is licensed under the MIT License. All contributions are welcome
 
 [next]: https://nextjs.org/
