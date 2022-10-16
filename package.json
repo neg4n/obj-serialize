@@ -1,6 +1,6 @@
 {
   "name": "obj-serialize",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Simple utility to serialize objects to be passed around to another context.",
   "main": "./lib/obj-serialize.cjs",
   "author": {
