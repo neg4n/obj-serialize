@@ -2,7 +2,6 @@
   "name": "obj-serialize",
   "version": "1.0.1",
   "description": "Simple utility to serialize objects to be passed around to another context.",
-  "main": "./lib/obj-serialize.cjs",
   "author": {
     "name": "Igor Klepacki",
     "email": "neg4n@icloud.com",
@@ -23,12 +22,8 @@
     "url": "https://github.com/neg4n/obj-serialize/issues"
   },
   "homepage": "https://github.com/neg4n/obj-serialize/#readme",
-  "source": "src/index.ts",
-  "module": "./lib/obj-serialize.module.js",
-  "unpkg": "./lib/obj-serialize.umd.js",
-  "types": "./lib/index.d.ts",
   "files": [
-    "lib"
+    "dist"
   ],
   "license": "MIT",
   "prettier": {
@@ -39,25 +34,24 @@
     "singleQuote": true,
     "trailingComma": "all"
   },
+  "main": "./dist/index.js",
   "scripts": {
-    "dev": "ts-node src/index.ts",
     "prepublishOnly": "npm run build",
-    "prebuild": "rimraf lib",
-    "build": "microbundle",
-    "build:watch": "microbundle watch"
+    "prebuild": "rimraf dist",
+    "build": "tsup src --dts --minify",
+    "build:watch": "pnpm run build --watch"
   },
   "devDependencies": {
     "@types/flat": "^5.0.2",
     "@types/node": "^18.7.18",
-    "microbundle": "^0.15.1",
     "prettier": "^2.7.1",
     "rimraf": "^3.0.2",
-    "ts-node": "^10.9.1",
     "typescript": "^4.8.3"
   },
   "dependencies": {
     "@types/lodash": "^4.14.185",
     "flat": "^5.0.2",
-    "lodash": "^4.17.21"
+    "lodash": "^4.17.21",
+    "tsup": "^8.0.1"
   }
 }
