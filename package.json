@@ -1,7 +1,7 @@
 {
   "name": "obj-serialize",
-  "version": "1.0.1",
-  "description": "Simple utility to serialize objects to be passed around to another context.",
+  "version": "1.1.0",
+  "description": "Simple utility to serialize objects to be passed around to another context. Useful in Next.js Pages Router projects.",
   "author": {
     "name": "Igor Klepacki",
     "email": "neg4n@icloud.com",
@@ -16,6 +16,8 @@
     "nextjs-plugin",
     "next",
     "serialization",
+    "json",
+    "objects",
     "util"
   ],
   "bugs": {
@@ -46,12 +48,11 @@
     "@types/node": "^18.7.18",
     "prettier": "^2.7.1",
     "rimraf": "^3.0.2",
+    "tsup": "^8.0.1",
     "typescript": "^4.8.3"
   },
   "dependencies": {
-    "@types/lodash": "^4.14.185",
-    "flat": "^5.0.2",
-    "lodash": "^4.17.21",
-    "tsup": "^8.0.1"
+    "flattie": "^1.1.0",
+    "nestie": "^1.0.3"
   }
 }
