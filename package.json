@@ -32,16 +32,8 @@
     ".": "./dist/serialize.js",
     "./predefined": "./dist/predefined.js"
   },
+  "main": "./dist/serialize.js",
   "license": "MIT",
-  "prettier": {
-    "printWidth": 90,
-    "tabWidth": 2,
-    "useTabs": false,
-    "semi": false,
-    "singleQuote": true,
-    "trailingComma": "all"
-  },
-  "main": "./dist/index.js",
   "scripts": {
     "prepublishOnly": "npm run build",
     "prebuild": "rimraf dist",
