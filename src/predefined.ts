@@ -1,4 +1,4 @@
-import { serialize, SkipSerialization } from 'serialize'
+import { serialize, SkipSerialization } from './serialize'
 
 export function nextServerSideSerialize(data: Record<string, unknown>) {
   return serialize(data, (unserializedData) => {
