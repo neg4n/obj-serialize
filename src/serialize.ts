@@ -9,7 +9,7 @@ type SerializationRules = <T>(
   unserializedValue: T,
 ) => string | number | boolean | null | undefined | typeof SkipSerialization
 
-export function serialize(data: Record<string, unknown>, rules: SerializationRules) {
+export function serialize<R>(data: Record<string, unknown>, rules: SerializationRules) {
   return nestie(
     Object.entries(flattie(data) as Record<string, unknown>).reduce(
       (newData, [key, value]) => {
@@ -26,5 +26,5 @@ export function serialize(data: Record<string, unknown>, rules: SerializationRul
       },
       {} as Record<string, unknown>,
     ),
-  )
+  ) as Record<string, R>
 }

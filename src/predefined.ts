@@ -1,7 +1,7 @@
 import { serialize, SkipSerialization } from './serialize'
 
 export function nextServerSideSerialize(data: Record<string, unknown>) {
-  return serialize(data, (unserializedData) => {
+  return serialize<number | string | boolean | null>(data, (unserializedData) => {
     if (isDate(unserializedData)) {
       return unserializedData.toISOString()
     } else if (isUndefined(unserializedData)) {
