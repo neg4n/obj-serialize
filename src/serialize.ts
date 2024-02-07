@@ -10,6 +10,10 @@ type SerializationRules = <T>(
 ) => string | number | boolean | null | undefined | typeof SkipSerialization
 
 export function serialize<R>(data: Record<string, unknown>, rules: SerializationRules) {
+  if (hasCircularReferences(data)) {
+    throw new Error('Neither Next.js nor obj-serialize supports circular references.')
+  }
+
   return nestie(
     Object.entries(flattie(data) as Record<string, unknown>).reduce(
       (newData, [key, value]) => {
@@ -27,4 +31,25 @@ export function serialize<R>(data: Record<string, unknown>, rules: Serialization
       {} as Record<string, unknown>,
     ),
   ) as Record<string, R>
+}
+
+function hasCircularReferences(object: unknown): boolean {
+  const seenObjects = new Set<unknown>()
+
+  const detect = (object: unknown): boolean => {
+    if (object !== null && typeof object === 'object') {
+      if (seenObjects.has(object)) return true
+
+      seenObjects.add(object)
+
+      for (const key of Object.keys(object as object))
+        if (detect((object as { [key: string]: unknown })[key])) return true
+
+      seenObjects.delete(object)
+    }
+
+    return false
+  }
+
+  return detect(object)
 }
