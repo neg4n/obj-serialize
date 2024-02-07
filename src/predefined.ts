@@ -1,8 +1,7 @@
-import { serialize, SkipSerialization } from 'serialize'
-import { isDate, isUndefined } from 'lodash'
+import { serialize, SkipSerialization } from './serialize'
 
 export function nextServerSideSerialize(data: Record<string, unknown>) {
-  return serialize(data, (unserializedData) => {
+  return serialize<number | string | boolean | null>(data, (unserializedData) => {
     if (isDate(unserializedData)) {
       return unserializedData.toISOString()
     } else if (isUndefined(unserializedData)) {
@@ -13,4 +12,12 @@ export function nextServerSideSerialize(data: Record<string, unknown>) {
       return SkipSerialization
     }
   })
+}
+
+function isDate(value: unknown): value is Date {
+  return value instanceof Date
+}
+
+function isUndefined(value: unknown): value is undefined {
+  return value === undefined
 }

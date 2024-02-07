@@ -1,3 +1,6 @@
 lib
 stats.html
+dist
 node_modules
+coverage
+.DS_Store
