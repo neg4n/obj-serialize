@@ -57,7 +57,8 @@ export default function Home({ smallDogs }) {
 
 The error when opening the home page would look like this:
 
-> ⛔️ Error: Error serializing `.smallDogs[0].birth` returned from `getServerSideProps` in “/“.  
+> [!CAUTION]
+> Error: Error serializing `.smallDogs[0].birth` returned from `getServerSideProps` in “/“.  
 > Reason: `object` (“[object Date]”) cannot be serialized as JSON. Please only return JSON serializable data types.
 
 ### The solution
@@ -108,6 +109,7 @@ import { serialize } from 'obj-serialize'
 
 The function accepts data to be serialized as a first parameter and serialization rules as the second parameter. The rules parameter is nothing else but function that is used to _“walk”_ through the object, be executed for each occurrence and eventually convert unserialized data into proper one by returning it.
 
+> [!NOTE]
 > ℹ️ There is a special value called `SkipSerialization`. It is a unique token that is intended to be used when serialisation traverse does not meet any condition in your serialisation rules and you just need to skip the process for particular case. It has to be this token and not `null` or `undefined` since these two can also have impact on desired data after the serialization.
 
 ### Example custom serializer
