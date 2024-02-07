@@ -18,5 +18,5 @@ jobs:
         uses: ArtiomTr/jest-coverage-report-action@v2.2.4
         with:
           package-manager: pnpm
-          working-directory: "./packages/next-api-compose/"
+          working-directory: "."
           test-script: pnpm jest --json --coverage --testLocationInResults --outputFile=report.json
