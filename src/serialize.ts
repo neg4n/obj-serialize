@@ -1,6 +1,3 @@
-import { flattie } from 'flattie'
-import { nestie } from 'nestie'
-
 export const SkipSerialization = Symbol(
   'ba1894562a5b3e00de68679b5e01fed0de0a0aac6da459729c2f4d665d928ccc',
 )
@@ -9,47 +6,65 @@ type SerializationRules = <T>(
   unserializedValue: T,
 ) => string | number | boolean | null | undefined | typeof SkipSerialization
 
-export function serialize<R>(data: Record<string, unknown>, rules: SerializationRules) {
+function detectCircularReferences(
+  object: unknown,
+  seenObjects = new Set<unknown>(),
+): boolean {
+  if (object !== null && typeof object === 'object') {
+    if (seenObjects.has(object)) return true
+
+    seenObjects.add(object)
+    for (const key of Object.keys(object as object)) {
+      if (
+        detectCircularReferences((object as { [key: string]: unknown })[key], seenObjects)
+      )
+        return true
+    }
+
+    seenObjects.delete(object)
+  }
+  return false
+}
+
+function hasCircularReferences(object: unknown): boolean {
+  return detectCircularReferences(object)
+}
+
+function isPlainObject(obj: unknown): obj is Record<string, unknown> {
+  return Object.prototype.toString.call(obj) === '[object Object]'
+}
+
+function processValue(value: unknown, rules: SerializationRules): unknown {
+  if (Array.isArray(value)) {
+    return value
+      .map((item) => processValue(item, rules))
+      .filter((item) => item !== SkipSerialization)
+  } else if (typeof value === 'object' && value !== null && isPlainObject(value)) {
+    const processedObject = Object.fromEntries(
+      Object.entries(value)
+        .map(([key, val]) => [key, processValue(val, rules)])
+        .filter(([, val]) => val !== SkipSerialization),
+    )
+
+    if (Object.keys(processedObject).length === 0 && !rules(value))
+      return SkipSerialization
+
+    return processedObject
+  } else {
+    const serialized = rules(value)
+    if (serialized === SkipSerialization) return value
+
+    return serialized
+  }
+}
+
+export function serialize<V>(data: unknown, rules: SerializationRules) {
   if (hasCircularReferences(data)) {
     throw new Error('Neither Next.js nor obj-serialize supports circular references.')
   }
 
-  return nestie(
-    Object.entries(flattie(data) as Record<string, unknown>).reduce(
-      (newData, [key, value]) => {
-        let oldValue = value
-        const serialized = rules(value)
-
-        if (typeof serialized === typeof SkipSerialization) {
-          newData[key] = oldValue
-        } else if (serialized !== oldValue) {
-          newData[key] = serialized
-        }
-
-        return newData
-      },
-      {} as Record<string, unknown>,
-    ),
-  ) as Record<string, R>
-}
-
-function hasCircularReferences(object: unknown): boolean {
-  const seenObjects = new Set<unknown>()
-
-  const detect = (object: unknown): boolean => {
-    if (object !== null && typeof object === 'object') {
-      if (seenObjects.has(object)) return true
-
-      seenObjects.add(object)
-
-      for (const key of Object.keys(object as object))
-        if (detect((object as { [key: string]: unknown })[key])) return true
-
-      seenObjects.delete(object)
-    }
-
-    return false
-  }
-
-  return detect(object)
+  const result = processValue(data, rules)
+  return result === SkipSerialization
+    ? ({} as Record<string, V>)
+    : (result as Record<string, V>)
 }

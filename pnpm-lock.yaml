@@ -4,14 +4,6 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
-dependencies:
-  flattie:
-    specifier: ^1.1.0
-    version: 1.1.0
-  nestie:
-    specifier: ^1.0.3
-    version: 1.0.3
-
 devDependencies:
   '@jest/globals':
     specifier: ^29.7.0
@@ -19,9 +11,6 @@ devDependencies:
   '@jest/types':
     specifier: ^29.6.3
     version: 29.6.3
-  '@types/flat':
-    specifier: ^5.0.2
-    version: 5.0.2
   '@types/node':
     specifier: ^18.7.18
     version: 18.7.18
@@ -43,6 +32,9 @@ devDependencies:
   tsup:
     specifier: ^8.0.1
     version: 8.0.1(typescript@4.8.3)
+  type-fest:
+    specifier: ^4.10.2
+    version: 4.10.2
   typescript:
     specifier: ^4.8.3
     version: 4.8.3
@@ -1097,10 +1089,6 @@ packages:
       '@babel/types': 7.23.6
     dev: true
 
-  /@types/flat@5.0.2:
-    resolution: {integrity: sha512-3zsplnP2djeps5P9OyarTxwRpMLoe5Ash8aL9iprw0JxB+FAHjY+ifn4yZUuW4/9hqtnmor6uvjSRzJhiVbrEQ==}
-    dev: true
-
   /@types/graceful-fs@4.1.9:
     resolution: {integrity: sha512-olP3sd1qOEe5dXTSaFvQG+02VdRXcdytWLAZsAq1PecU8uqQAhkrnbli7DagjtXKW/Bl7YJbUsa8MPcuc8LHEQ==}
     dependencies:
@@ -1674,11 +1662,6 @@ packages:
       locate-path: 5.0.0
       path-exists: 4.0.0
     dev: true
-
-  /flattie@1.1.0:
-    resolution: {integrity: sha512-xU99gDEnciIwJdGcBmNHnzTJ/w5AT+VFJOu6sTB6WM8diOYNA3Sa+K1DiEBQ7XH4QikQq3iFW1U+jRVcotQnBw==}
-    engines: {node: '>=8'}
-    dev: false
 
   /fs.realpath@1.0.0:
     resolution: {integrity: sha512-OO0pH2lK6a0hZnAdau5ItzHPI6pUlvI7jMVnxUQRtw4owF2wk8lOSabtGDCTP4Ggrg2MbGnWO9X8K1t4+fGMDw==}
@@ -2507,11 +2490,6 @@ packages:
     resolution: {integrity: sha512-OWND8ei3VtNC9h7V60qff3SVobHr996CTwgxubgyQYEpg290h9J0buyECNNJexkFm5sOajh5G116RYA1c8ZMSw==}
     dev: true
 
-  /nestie@1.0.3:
-    resolution: {integrity: sha512-971uBUL8p6TuISghZ4Qxx35DKgRKVuOLNBl9Q6CJNIcwh79zAB07d3bkrN3Sh3xbOhyzdUS9V7t0KV6/gyOl+g==}
-    engines: {node: '>=8'}
-    dev: false
-
   /next@14.0.4(@babel/core@7.23.6)(react-dom@18.2.0)(react@18.2.0):
     resolution: {integrity: sha512-qbwypnM7327SadwFtxXnQdGiKpkuhaRLE2uq62/nRul9cj9KhQ5LhHmlziTNqUidZotw/Q1I9OjirBROdUJNgA==}
     engines: {node: '>=18.17.0'}
@@ -3150,6 +3128,11 @@ packages:
   /type-fest@0.21.3:
     resolution: {integrity: sha512-t0rzBq87m3fVcduHDUFhKmyyX+9eo6WQjZvf51Ea/M0Q7+T374Jp1aUiyUl0GKxp8M/OETVHSDvmkyPgvX+X2w==}
     engines: {node: '>=10'}
+    dev: true
+
+  /type-fest@4.10.2:
+    resolution: {integrity: sha512-anpAG63wSpdEbLwOqH8L84urkL6PiVIov3EMmgIhhThevh9aiMQov+6Btx0wldNcvm4wV+e2/Rt1QdDwKHFbHw==}
+    engines: {node: '>=16'}
     dev: true
 
   /typescript@4.8.3:
