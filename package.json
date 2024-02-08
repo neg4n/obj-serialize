@@ -1,6 +1,6 @@
 {
   "name": "obj-serialize",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "Simple utility to serialize objects to be passed around to another context. Useful in Next.js Pages Router projects.",
   "author": {
     "name": "Igor Klepacki",
